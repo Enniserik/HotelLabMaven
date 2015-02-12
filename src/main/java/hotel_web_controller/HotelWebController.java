@@ -45,7 +45,9 @@ public class HotelWebController extends HttpServlet {
         HotelService hs = new HotelService();
         List<Hotel> hotelInfo = hs.retrieveAllHotels();  
         
-        if(request.getParameter("type").equals("view")){
+        String typeString = request.getParameter("type");
+        
+        if(typeString != null && typeString.equals("view")){
             
             Hotel h = hotelInfo.get(Integer.parseInt(request.getParameter("arraySpace")));
             request.setAttribute("hotelName", h.getHotelName());
@@ -55,12 +57,12 @@ public class HotelWebController extends HttpServlet {
             request.setAttribute("postal", h.getPostalCode());
             request.setAttribute("notes", h.getNotes());
             
-        } else if(request.getParameter("type").equals("delete")){
+        } else if(typeString != null && typeString.equals("delete")){
             
             Hotel h = hotelInfo.get(Integer.parseInt(request.getParameter("arraySpace")));
             hs.deleteHotelRecord(h.getHotelId());
             
-        } else if(request.getParameter("type").equals("create")){
+        } else if(typeString != null && typeString.equals("create")){
             
             String name = request.getParameter("name");
             String address = request.getParameter("address");
@@ -71,7 +73,7 @@ public class HotelWebController extends HttpServlet {
             
             hs.insertHotelRecord(name, address, city, state, postal, notes);
             
-        } else if(request.getParameter("type").equals("update")){
+        } else if(typeString != null && typeString.equals("update")){
             
             int id = Integer.parseInt(request.getParameter("hotel_id"));
             String name = request.getParameter("name");

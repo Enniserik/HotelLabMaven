@@ -47,10 +47,10 @@ $(document).ready(function () {
 
     });
 
-    $('#viewBtn').click(function () {
-        $('#hotelForm').attr('action', "/HotelLabWeb/hotelweb?type=normal&hotel_id=0");
-        $('#hotelForm').submit();
-    });
+//    $('#viewBtn').click(function () {
+//        $('#hotelForm').attr('action', "/HotelLabWeb/hotelweb?type=normal&hotel_id=0");
+//        $('#hotelForm').submit();
+//    });
 
     $('#updateBtn').click(function () {
         var url = window.location.href;

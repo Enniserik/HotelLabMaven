@@ -28,8 +28,7 @@
 
             <div class="col-sm-4">
                 <table class="table">
-                    <th><h1>Hotels</h1><button type="button" class="btn btn-primary" id="viewBtn" form="hotelForm">View</button></th>
-                    
+                    <th><h1>Hotels</h1></th>
                     <tr>
                         <div class="form-group">
                             <td>Hotel Id</td>
