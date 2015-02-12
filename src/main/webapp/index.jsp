@@ -18,7 +18,7 @@
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="index.jsp" class="pad-left-sm navbar-brand">Hotel Lab (Web)</a>
+                <a href="/HotelLabWeb/hotelweb" class="pad-left-sm navbar-brand">Hotel Lab (Web)</a>
             </div>
         </div>
     </nav>
