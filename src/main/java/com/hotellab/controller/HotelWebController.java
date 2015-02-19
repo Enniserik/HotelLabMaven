@@ -3,28 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hotel_web_controller;
+package com.hotellab.controller;
 
-import hotel_web_model.Hotel;
-import hotel_web_model.HotelService;
+import com.hotellab.model.Hotel;
+import com.hotellab.model.HotelService;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author eennis
  */
-@WebServlet(name = "hotelWebController", urlPatterns = {"/hotelweb"})
 public class HotelWebController extends HttpServlet {
 
     private static final String RESULT_PAGE = "index.jsp";
@@ -42,7 +38,19 @@ public class HotelWebController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HotelService hs = new HotelService();
+        HttpSession session = request.getSession();
+ 
+        if(request.getParameter("arraySpace") != null){
+            session.setAttribute("hotel", request.getParameter("arraySpace"));
+        }
+        
+        ServletContext ctx = request.getServletContext();
+        String driver = ctx.getInitParameter("driver");
+        String url = ctx.getInitParameter("url");
+        String username = ctx.getInitParameter("username");
+        String password = ctx.getInitParameter("password");
+        
+        HotelService hs = new HotelService(driver, url, username, password);
         List<Hotel> hotelInfo = hs.retrieveAllHotels();  
         
         String typeString = request.getParameter("type");
@@ -99,13 +107,28 @@ public class HotelWebController extends HttpServlet {
             request.setAttribute("postal", h.getPostalCode());
             request.setAttribute("notes", h.getNotes());
             
+        } else {
+            
+            if(session.getAttribute("hotel") != null){
+                
+                int slot = Integer.parseInt(session.getAttribute("hotel").toString());
+                Hotel h = hotelInfo.get(slot);
+                request.setAttribute("hotelName", h.getHotelName());
+                request.setAttribute("address", h.getAddress());
+                request.setAttribute("city", h.getCity());
+                request.setAttribute("state", h.getState());
+                request.setAttribute("postal", h.getPostalCode());
+                request.setAttribute("notes", h.getNotes());
+            }
         }
         
         hotelInfo = hs.retrieveAllHotels();
         request.setAttribute("hotels", hotelInfo);
-
+        
+        
+        
         RequestDispatcher view =
-                request.getRequestDispatcher(RESULT_PAGE);
+                request.getRequestDispatcher(response.encodeURL(RESULT_PAGE));
         view.forward(request, response);
         
     }

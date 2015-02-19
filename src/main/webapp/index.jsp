@@ -18,7 +18,7 @@
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a href="/HotelLabWeb/hotelweb" class="pad-left-sm navbar-brand">Hotel Lab (Web)</a>
+                <a href="/HotelLabMaven/hotelweb" class="pad-left-sm navbar-brand">Hotel Lab (Maven)</a>
             </div>
         </div>
     </nav>
@@ -51,7 +51,7 @@
                     
             <div class="col-sm-2"></div>
             
-            <div class="col-lg-6">
+            <div class="col-sm-6">
 
             <form id="hotelForm" class="hotelselected" action="${resetAction}" method="POST">
                 <table class="table">
@@ -111,6 +111,7 @@
             
             </div>
         </div>
+        <h2>Number of Sessions: ${sessionCount}</h2>
     </div>
 
     <script src="scripts/jquery-1.10.2.min.js"></script>

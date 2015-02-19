@@ -1,4 +1,4 @@
-package hotel_web_model;
+package com.hotellab.model;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ public class HotelLab {
      */
     public static void main(String[] args){
         
-        HotelService hs = new HotelService();
-        
-        List<Hotel> hotels = hs.retrieveAllHotels();
-        
-        for(Hotel h : hotels){
-            System.out.println(h.toString());
-        }
+//        HotelService hs = new HotelService();
+//        
+//        List<Hotel> hotels = hs.retrieveAllHotels();
+//        
+//        for(Hotel h : hotels){
+//            System.out.println(h.toString());
+//        }
         
 //        
 //        //Display initial data

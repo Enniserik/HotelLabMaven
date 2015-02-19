@@ -1,4 +1,4 @@
-package hotel_web_model;
+package com.hotellab.model;
 
 import java.io.File;
 import java.io.FileInputStream;

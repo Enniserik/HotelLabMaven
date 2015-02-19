@@ -1,4 +1,4 @@
-package hotel_web_model;
+package com.hotellab.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +11,24 @@ import java.util.Map;
 public class HotelDAOStrategy implements HotelDAO {
     
     private DBAccess dba;
-//    private String driver;
-//    private String url;
-//    private String username;
-//    private String password;
+    private String driver;
+    private String url;
+    private String username;
+    private String password;
     
-    public HotelDAOStrategy(){
+    public HotelDAOStrategy(String driver, String url, String username, String password){
         dba = new DBMySQLStrategy();
-//        driver = HotelDataAccessFactory.getDriver();
-//        url = HotelDataAccessFactory.getUrl();
-//        username = HotelDataAccessFactory.getUsername();
-//        password = HotelDataAccessFactory.getPassword();
+        this.driver = driver;
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
     
     @Override
     public List<Hotel> findAllHotels() {
         
-//        dba.openConnection(driver, url, username, password);
-        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
+        dba.openConnection(driver, url, username, password);
+//        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
         List<Map<String, Object>> records = dba.findAllRecords("hotel");
         List<Hotel> hotels = new ArrayList<>();
         Hotel h = null;
@@ -55,8 +55,8 @@ public class HotelDAOStrategy implements HotelDAO {
     @Override
     public int updateHotelRecord(int pk, String col, String value) {
         
-//        dba.openConnection(driver, url, username, password);
-        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
+        dba.openConnection(driver, url, username, password);
+//        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
         int updates = dba.updateRecord("hotel", "hotel_id", pk, col, value);
     
         return updates;
@@ -66,8 +66,8 @@ public class HotelDAOStrategy implements HotelDAO {
     @Override
     public int insertHotelRecord(List<String> colNames, List values) {
         
-//        dba.openConnection(driver, url, username, password);
-        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
+        dba.openConnection(driver, url, username, password);
+//        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
         int updates = dba.insertRecord("hotel", colNames, values);
         
         return updates;
@@ -77,8 +77,8 @@ public class HotelDAOStrategy implements HotelDAO {
     @Override
     public int deleteHotelRecord(int pk) {
         
-//        dba.openConnection(driver, url, username, password);
-        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
+        dba.openConnection(driver, url, username, password);
+//        dba.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/hotel", "root", "admin");
         int updates = dba.deleteRecord("hotel", "hotel_id", pk);
         
         return updates;

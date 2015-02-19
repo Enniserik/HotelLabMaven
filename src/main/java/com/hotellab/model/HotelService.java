@@ -1,4 +1,4 @@
-package hotel_web_model;
+package com.hotellab.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +13,8 @@ public class HotelService {
     
     private HotelDAO dao;
     
-    public HotelService(){
-        dao = new HotelDAOStrategy();
+    public HotelService(String driver, String url, String username, String password){
+        dao = new HotelDAOStrategy(driver, url, username, password);
     }
     
     public List<Hotel> retrieveAllHotels() {

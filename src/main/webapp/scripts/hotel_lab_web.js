@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $('.selectable').click(function () {
         var id = $(this).attr('id');
-        $('#hotelForm').attr('action', "/HotelLabWeb/hotelweb?type=view&hotel_id=" + id + "&arraySpace=" + $(this).attr("arraySpace"));
+        $('#hotelForm').attr('action', "/HotelLabMaven/hotelweb?type=view&hotel_id=" + id + "&arraySpace=" + $(this).attr("arraySpace"));
         $('#hotelForm').submit();
     });
 
@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     $('#insertBtn').click(function () {
 
-        $('#hotelForm').attr('action', "/HotelLabWeb/hotelweb?type=create&hotel_id=0");
+        $('#hotelForm').attr('action', "/HotelLabMaven/hotelweb?type=create&hotel_id=0");
 
         if ($('#name').val().length > 0 && $('#address').val().length > 0 && $('#city').val().length > 0 &&
                 $('#state').val().length > 0 && $('#postal').val().length > 0) {
@@ -58,7 +58,7 @@ $(document).ready(function () {
         var id = url.substring(url.lastIndexOf('id='), (url.lastIndexOf('id=') + 4));
         id = id.substring(3, 4);
         if (type === "view" && !$('#hotelForm').hasClass('cleared')) {
-            $('#hotelForm').attr('action', "/HotelLabWeb/hotelweb?type=update&hotel_id=" + id + "&arraySpace=" + $('#' + id).attr("arraySpace"));
+            $('#hotelForm').attr('action', "/HotelLabMaven/hotelweb?type=update&hotel_id=" + id + "&arraySpace=" + $('#' + id).attr("arraySpace"));
             $('#hotelForm').submit();
         } else {
             $('#error').removeClass('hidden');
@@ -72,7 +72,7 @@ $(document).ready(function () {
         var id = url.substring(url.lastIndexOf('id='), (url.lastIndexOf('id=') + 4));
         id = id.substring(3, 4);
         if ((type === "view" || type === "update") && !$('#hotelForm').hasClass('cleared')) {
-            $('#hotelForm').attr('action', "/HotelLabWeb/hotelweb?type=delete&hotel_id=" + id + "&arraySpace=" + $('#' + id).attr("arraySpace"));
+            $('#hotelForm').attr('action', "/HotelLabMaven/hotelweb?type=delete&hotel_id=" + id + "&arraySpace=" + $('#' + id).attr("arraySpace"));
             $('#hotelForm').submit();
         } else {
             $('#error').removeClass('hidden');
