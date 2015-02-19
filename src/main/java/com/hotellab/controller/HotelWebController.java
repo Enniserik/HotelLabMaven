@@ -8,6 +8,7 @@ package com.hotellab.controller;
 import com.hotellab.model.Hotel;
 import com.hotellab.model.HotelService;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -57,13 +58,7 @@ public class HotelWebController extends HttpServlet {
         
         if(typeString != null && typeString.equals("view")){
             
-            Hotel h = hotelInfo.get(Integer.parseInt(request.getParameter("arraySpace")));
-            request.setAttribute("hotelName", h.getHotelName());
-            request.setAttribute("address", h.getAddress());
-            request.setAttribute("city", h.getCity());
-            request.setAttribute("state", h.getState());
-            request.setAttribute("postal", h.getPostalCode());
-            request.setAttribute("notes", h.getNotes());
+            buildHotelInfo(Integer.parseInt(request.getParameter("arraySpace")), hotelInfo, request); 
             
         } else if(typeString != null && typeString.equals("delete")){
             
@@ -72,65 +67,67 @@ public class HotelWebController extends HttpServlet {
             
         } else if(typeString != null && typeString.equals("create")){
             
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
-            String city = request.getParameter("city");
-            String state = request.getParameter("state");
-            String postal = request.getParameter("postal");
-            String notes = request.getParameter("notes");
+            List<String> hotelParams = getHotelInfo(request);
             
-            hs.insertHotelRecord(name, address, city, state, postal, notes);
+            hs.insertHotelRecord(hotelParams.get(0), hotelParams.get(1), hotelParams.get(2), 
+                    hotelParams.get(3), hotelParams.get(4), hotelParams.get(5));
             
         } else if(typeString != null && typeString.equals("update")){
             
             int id = Integer.parseInt(request.getParameter("hotel_id"));
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
-            String city = request.getParameter("city");
-            String state = request.getParameter("state");
-            String postal = request.getParameter("postal");
-            String notes = request.getParameter("notes"); 
-            
-            hs.updateHotelRecord(id, "hotel_name", name);
-            hs.updateHotelRecord(id, "street_address", address);
-            hs.updateHotelRecord(id, "city", city);
-            hs.updateHotelRecord(id, "state", state);
-            hs.updateHotelRecord(id, "postal_code", postal);
-            hs.updateHotelRecord(id, "notes", notes);
+            List<String> hotelParams = getHotelInfo(request);
+
+            hs.updateHotelRecord(id, "hotel_name", hotelParams.get(0));
+            hs.updateHotelRecord(id, "street_address", hotelParams.get(1));
+            hs.updateHotelRecord(id, "city", hotelParams.get(2));
+            hs.updateHotelRecord(id, "state", hotelParams.get(3));
+            hs.updateHotelRecord(id, "postal_code", hotelParams.get(4));
+            hs.updateHotelRecord(id, "notes", hotelParams.get(5));
             
             hotelInfo = hs.retrieveAllHotels();
-            Hotel h = hotelInfo.get(Integer.parseInt(request.getParameter("arraySpace")));
-            request.setAttribute("hotelName", h.getHotelName());
-            request.setAttribute("address", h.getAddress());
-            request.setAttribute("city", h.getCity());
-            request.setAttribute("state", h.getState());
-            request.setAttribute("postal", h.getPostalCode());
-            request.setAttribute("notes", h.getNotes());
+            buildHotelInfo(Integer.parseInt(request.getParameter("arraySpace")), hotelInfo, request);  
             
         } else {
             
-            if(session.getAttribute("hotel") != null){
-                
+            if(session.getAttribute("hotel") != null){     
                 int slot = Integer.parseInt(session.getAttribute("hotel").toString());
-                Hotel h = hotelInfo.get(slot);
-                request.setAttribute("hotelName", h.getHotelName());
-                request.setAttribute("address", h.getAddress());
-                request.setAttribute("city", h.getCity());
-                request.setAttribute("state", h.getState());
-                request.setAttribute("postal", h.getPostalCode());
-                request.setAttribute("notes", h.getNotes());
+                buildHotelInfo(slot, hotelInfo, request);  
             }
         }
         
         hotelInfo = hs.retrieveAllHotels();
         request.setAttribute("hotels", hotelInfo);
         
-        
-        
         RequestDispatcher view =
                 request.getRequestDispatcher(response.encodeURL(RESULT_PAGE));
         view.forward(request, response);
         
+    }
+    
+    private void buildHotelInfo(int arrayIdx, List<Hotel> hotelInfo, HttpServletRequest request){
+        
+        Hotel h = hotelInfo.get(arrayIdx);
+        request.setAttribute("hotelName", h.getHotelName());
+        request.setAttribute("address", h.getAddress());
+        request.setAttribute("city", h.getCity());
+        request.setAttribute("state", h.getState());
+        request.setAttribute("postal", h.getPostalCode());
+        request.setAttribute("notes", h.getNotes());
+        
+    }
+    
+    private List<String> getHotelInfo(HttpServletRequest request){
+        
+        List<String> hotelParams = new ArrayList<>();
+        
+        hotelParams.add(request.getParameter("name"));
+        hotelParams.add(request.getParameter("address"));
+        hotelParams.add(request.getParameter("city"));
+        hotelParams.add(request.getParameter("state"));
+        hotelParams.add(request.getParameter("postal"));
+        hotelParams.add(request.getParameter("notes"));
+            
+        return hotelParams;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
